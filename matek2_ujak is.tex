@@ -1,0 +1,858 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+
+\title{MATEK 2 Jegyzet}
+\author{Krusóczki Ádám}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Lineáris algebra}
+
+\subsection{Ismétlés}
+
+\subsubsection{Egyenes egyenlete síkban}
+    Adott $P(x_0, y_0)$ és $\underline{n} = \left( A, B \right)^T$ \textbf{normálvektor}. Ekkor az egyenes egyenlete:
+
+\begin{equation*}
+    A(x-x_0) + B(y-y_0) = 0
+\end{equation*}
+
+\subsubsection{Egyenes egyenlete térben}
+    Adott $P(x_0, y_0, z_0)$ és $\underline{v} = \left( A, B, C \right)^T$ \textbf{irányvektor}. Ekkor az egyenes egyenlete:
+
+\begin{equation*}
+    \frac{x-x_0}{A} = \frac{y-y_0}{B} = \frac{z-z_0}{C}
+\end{equation*}
+
+\subsubsection{Sík egyenlete}
+    Adott $P(x_0, y_0, z_0)$ és $\underline{n} = \left( A, B, C \right)^T$ \textbf{normálvektor}. Ekkor a sík egyenlete:
+
+\begin{equation*}
+    A(x-x_0) + B(y-y_0) + C(z-z_0) = 0
+\end{equation*}
+
+\subsubsection{Sklaláris/Diadikus/Vektoriális szorzat}
+Adott 
+\begin{align*}
+    \underline{a} &= \begin{bmatrix} x_0 \\ y_0 \\ z_0 \end{bmatrix} &
+    \underline{b} &= \begin{bmatrix} x_1 \\ y_1 \\ z_0 \end{bmatrix}
+\end{align*}
+vektorok. Ekkor a \textbf{skaláris szorzatuk}:
+\begin{equation*}
+    \left\langle \underline{a}, \underline{b} \right\rangle = \underline{a} \cdot \underline{b} = \underline{a}^T\underline{b} = x_0x_1 + y_0y_1 + z_0z_1
+\end{equation*}
+
+\newpage
+
+És a \textbf{diadikus szorzatuk}:
+
+\begin{equation*}
+    \underline{a} \circ \underline{b} = \underline{a}\underline{b}^T = \begin{bmatrix} x_0 \\ y_0 \\ z_0 \end{bmatrix} \begin{bmatrix} x_1 & y_1 & z_1 \end{bmatrix} = \begin{bmatrix} x_0x_1 & x_0y_1 & x_0z_1 \\ y_0x_1 & y_0y_1 & y_0z_1 \\ z_0x_1 & z_0y_1 & z_0z_1 \end{bmatrix}
+\end{equation*}
+
+Végül a \textbf{vektoriális szorzatuk}:
+\begin{equation*}
+    \underline{a} \times \underline{b} = det\begin{bmatrix} e_1 & e_2 & e_3 \\ x_0 & y_0 & z_0 \\ x_1 & y_1 & z_1 \end{bmatrix}
+\end{equation*}
+
+Ahol $e_1, e_2, e_3$ az egységvektorok. A vektoriális szorzat iránya merőleges mindkét vektorra.
+
+\subsection{Vektorterek}
+
+\subsubsection{Definíció}
+
+Azt mondjuk, hogy $V$ vektortér $\mathbb{F}$ számtest felett, ha értelmezett a következő két művelet:
+\begin{enumerate}
+\item $+:V\times V\rightarrow V \qquad +\left(\underline{u},\underline{v}\right)\vcentcolon = \underline{u}+\underline{v}\in V$:
+\begin{itemize}
+\item $\forall \underline{u},\underline{v}\in V \qquad \underline{u}+\underline{v}=\underline{v}+\underline{u}$
+\item $\forall \underline{u},\underline{v},\underline{w}\in V \qquad \underline{u}+\left(\underline{v}+\underline{w}\right)=\left(\underline{u}+\underline{v}\right)+\underline{w}$
+\item $\exists!0\in V \qquad \forall \underline{u}\in V \qquad \underline{u}+0=\underline{u}$.
+\item $\forall \underline{u}\in V \exists!-\underline{u}\in V \qquad  \underline{u}+\left(-\underline{u}\right)=0$.
+\end{itemize}
+\item $\cdot:\mathbb{F}\times V\rightarrow V \qquad \cdot\left(\lambda,\underline{u}\right)\vcentcolon = \lambda\underline{u}\in V$:
+\begin{itemize}
+\item $\forall \lambda,\mu\in\mathbb{F}\qquad \forall \underline{u}\in V \qquad \lambda\left(\mu\underline{u}\right)=\left(\lambda\mu\right)\underline{u}$
+\item $\forall \lambda,\mu\in\mathbb{F}, \forall \underline{u}\in V \qquad \left(\lambda+\mu\right)\underline{u}=\lambda\underline{u}+\mu\underline{u}$
+\item $\forall \lambda\in\mathbb{F}\qquad\forall \underline{u},\underline{v}\in V \qquad \lambda\left(\underline{u}+\underline{v}\right)=\lambda\underline{u}+\lambda\underline{v}$
+\item $\exists!1\in V \qquad \forall \underline{u}\in V \qquad 1\underline{u}=\underline{u}$.
+\end{itemize}
+\end{enumerate}
+
+\subsection{Lineáris függetlenség, Generátorrendszerek, Bázisok}
+
+\subsubsection{Lineáris függetlenség}
+Legyenek $\underline{v}_1, \underline{v}_2, \ldots, \underline{v}_n$ vektorok. Ezek akkor alkotnak lineárisan független rendszert, ha:
+
+\begin{equation*}
+    \sum_{i = 1}^{n}\lambda_i\underline{v}_i = \lambda_1\underline{v}_1 + \lambda_2\underline{v}_2 + \ldots + \lambda_n\underline{v}_n = \underline{0} \Leftrightarrow  \lambda_1 = \lambda_2 = \ldots = \lambda_n = 0
+\end{equation*}
+
+\subsubsection{Generátorrendszerek}
+
+Legyenek $\underline{v}_1, \underline{v}_2, \ldots, \underline{v}_n$ vektorok. Ezek akkor alkotnak generátorrendszert \textbf{V vektortérben}, ha:
+
+\begin{equation*}
+    \forall \underline{w} \in V: \underline{w} = \sum_{i = 1}^{n}\lambda_i\underline{v}_i
+\end{equation*}
+
+\subsubsection{Bázisok}
+
+Legyenek $\underline{v}_1, \underline{v}_2, \ldots, \underline{v}_n$ vektorok. Ezek akkor alkotnak bázist $\mathbf{V}$ vektortérben, ha:
+
+\begin{enumerate}
+    \item Generátorrendszert alkotnak
+    \item Lineárisan függetlenek   
+\end{enumerate}
+
+Bármely vektor kifejezhető egyértelműen a bázis vek\-tor\-ok li\-ne\-ár\-is kom\-bi\-ná\-ci\-ójaként.
+
+\subsubsection{Dimenzió}
+
+Egy vektortér dimenziója a bázisának számossága. Jelölése: $\mathbf{dim(V)}$.
+
+\subsubsection{Rang}
+
+Egy vektortér rangjának száma a benne lévő független vektorok maximális száma. Jelölése: $\mathbf{rank(V)}$.
+
+\subsubsection{Altér} 
+
+A V vektortérnek W altere, ha $W \subset V$ és W is egy vektortér a V-beli mű\-ve\-le\-te\-kre. Jelölése: $W \leq V$.
+
+\newpage
+
+\subsubsection{Ortogonális bázis/Gram-Schmidt ortogonalizáció}
+
+Az ortogonális bázis egy olyan bázis ahol a bázisvektorok páronként me\-rő\-le\-ges\-ek egy\-más\-ra. A Gram-Schmidt ortogonalizáció egy olyan eljárás, amely egy tetszőleges bázist ortogonális bázissá alakít.
+
+Adott $\underline{u}$ és $\underline{x}$ vektorok. Ekkor az $\underline{x}$ vektor $\underline{u}$ vektorra vetítése a kö\-vet\-ke\-ző\-kép\-pen számítható:
+
+\[
+\mathrm{proj}_{\underline{u}}\,\underline{x} =\frac{\langle \underline{u} ,\underline{x} \rangle}{\|\underline{u}\|^2} \underline{u}
+\]
+
+ahol $\langle \underline{u} ,\underline{x} \rangle$ a két vektor skaláris szorzatát jelöli. 
+\vspace{4mm}
+\newline Az eljárás lényege, hogy az első vektor marad, a második vektort kivonjuk az első vektorra vetített második vektorból, a harmadik vektort pedig kivonjuk az első két vektorra vetített harmadik vektorból, és így tovább.
+
+\begin{align*}
+    \underline{v}_1 &= \underline{u}_1 & e_1 = \frac{v_1}{\left\lVert v_1\right\rVert}\\
+    \underline{v}_2 &= \underline{u}_2 - \mathrm{proj}_{\underline{v}_1}\,\underline{u}_2 & e_2 = \frac{v_2}{\left\lVert v_2\right\rVert}\\
+    \underline{v}_3 &= \underline{u}_3 - \mathrm{proj}_{\underline{v}_1}\,\underline{u}_3 - \mathrm{proj}_{\underline{v}_2}\,\underline{u}_3 & e_3 = \frac{v_3}{\left\lVert v_3\right\rVert}\\
+    \underline{v}_n &= \underline{u} - \sum_{k = 1}^{n-1} \mathrm{proj}_{\underline{v}_k}\,\underline{u}_n & e_n = \frac{v_n}{\left\lVert v_n\right\rVert}
+\end{align*}
+
+Ha ortonormált bázist ($e_1 \dots e_n$) szeretnénk, akkor az ortogonalizált vektorokat ($v_1\dots v_n$) osszuk le a hosszukkal.
+
+\subsection{Mátrixok, Inverz Mátrixok}
+
+\subsubsection{Mátrixok felépítése}
+
+Egy $\mathbf{A} \in \mathbb{R}^{n \times k}$ (vagy $\mathbf{A} \in \mathbb{C}^{n \times k}$) Mátrix n darab sorból áll és k darab oszlopból, ha $n = k$ akkor a mátrixot \textbf{négyzetes mátrixnak} nevezzük.
+A mátrix i-edik sorának j-edik elemét $a_{ij}$-nek jelöljük.
+
+\subsubsection{Műveletek mátrixokkal}
+
+Legyen $\mathbf{A} \in \mathbb{R}^{n \times k}$ és $\mathbf{B} \in \mathbb{R}^{l \times m}$. Ez a két mátrix akkor adható össze (vagy kivonható egymásból), ha $n=l$ és $k = m$, vagyis a dimenziójuk megegyezik. A művelet:
+\begin{equation*}
+    \mathbf{A} + \mathbf{B} = \begin{bmatrix} a_{11}+b_{11} & a_{12}+b_{12} & \ldots & a_{1k}+b_{1m} \\ a_{21}+b_{21} & a_{22}+b_{22} & \ldots & a_{2k}+b_{2m} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n1}+b_{l1} & a_{n2}+b_{l2} & \ldots & a_{nk}+b_{lm} \end{bmatrix}    
+\end{equation*}
+
+\newpage
+Ha egy mátrix skalárral szorzunk akkor minden eleme skalárral szorzódik. Legyen $\mathbf{A} \in \mathbb{R}^{n \times k}$ és $\lambda \in \mathbb{R}$ Ekkor:
+
+\begin{equation*}
+     \lambda \mathbf{A} = \begin{bmatrix} \lambda a_{11} & \lambda a_{12} & \ldots &  \lambda a_{1k} \\ \lambda a_{21} & \lambda a_{22} & \ldots & \lambda a_{2k} \\ \vdots & \vdots & \ddots & \vdots \\ \lambda a_{n1} & \lambda a_{n2} & \ldots & \lambda a_{nk} \end{bmatrix}
+\end{equation*}
+
+\vspace{1cm}
+
+Mátrix mátrixszal való szorzásának feltétele, hogy a bal oldali mátrix osz\-lopainak száma megegyezzen a jobb oldali mátrix sorainak számával.
+Legyen $\mathbf{A}, \mathbf{B} \in \mathbb{R}^{n \times n}$, ekkor az eredmény $n \times n$ dimenziójú ($\mathbb{R}^{\mathbf{n} \times n} \cdot \mathbb{R}^{n \times \mathbf{n}}$) mátrix lesz.
+
+\begin{equation*}
+    \begin{bmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & i \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        x & y & z \\
+        u & v & w \\
+        m & n & o \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        ax + bu + cm & ay + bv + cn & az + bw + co \\
+        dx + eu + fm & dy + ev + fn & dz + ew + fo \\
+        gx + hu + im & gy + hv + in & gz + hw + io \\
+    \end{bmatrix}
+\end{equation*}
+
+\subsubsection{Mátrixok transzponálása, nyoma} 
+
+Egy $\mathbf{A} \in \mathbb{R}^{n \times k}$ mátrix transzponáltja a mátrix sorait és oszlopait felcserélve kapott mátrix. Jelölése: $\mathbf{A}^T$.
+
+\begin{equation*}
+    \begin{bmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & i \\
+    \end{bmatrix}^T
+    =
+    \begin{bmatrix}
+        a & d & g \\
+        b & e & h \\
+        c & f & i \\
+    \end{bmatrix}
+\end{equation*}
+
+Mátrixok nyoma a főátló elemeinek összege. Jelölése: $tr(\mathbf{A})$. \newline Ha $\mathbf{A} \in \mathbb{R}^{n \times n}$, akkor:
+
+\begin{equation*}
+    tr(\mathbf{A}) = \sum_{i = 1}^{n} a_{ii}
+\end{equation*}
+
+\subsubsection{Mátrixok inverze}
+
+Egy $\mathbf{A} \in \mathbb{R}^{n \times n}$ mátrix akkor invertálható, ha létezik olyan $\mathbf{B} \in \mathbb{R}^{n \times n}$ mátrix, hogy:
+
+\begin{equation*}
+    \mathbf{A} \mathbf{B} = \mathbf{B} \mathbf{A} = \mathbf{I}
+\end{equation*}
+
+Ilyenkor a mátrix inverze $\mathbf{A}^{-1} = \mathbf{B}$. Ezt Gauss-eliminációval szokták meg\-határozni.
+
+
+\subsection{Determináns}
+
+\subsubsection{Definíció}
+
+Az $\mathbf{A} \in \mathbb{R}^{n \times n}$ mátrix determinánsa definíció szerint a kö\-vet\-ke\-ző\-kép\-pen szá\-mít\-hat\-ó:
+
+\begin{equation*}
+    \left\lvert \mathbf{A} \right\rvert = \det \mathbf{A} = \sum_{\sigma \in S_n} (-1)^{I(\sigma)} \prod_{i = 1}^{n} a_{i,\sigma(i)}
+\end{equation*}
+
+ahol $S_n$ az $n$ elemű permutációk halmaza, $I(\sigma)$ az $\sigma$ permutáció inverzióinak száma, $a_{i,\sigma(i)}$ az $A$ mátrix i sorának $\sigma(i)$ oszlopának eleme. \textbf{Ezt a módszert nem használjuk mert nagyon számításigyényes.}
+
+\subsubsection{Egyedi szabályok (2x2, 3x3)}
+
+Az $\mathbf{A} \in \mathbb{R}^{2 \times 2}$ mátrix determinánsa a következőképpen számítható:
+
+\begin{equation*}
+    det \mathbf{A} = det \begin{bmatrix} a & b \\ c & d \end{bmatrix} = ad - bc
+\end{equation*}
+
+Az $\mathbf{A} \in \mathbb{R}^{3 \times 3}$ mátrix determinánsa a Szarrusz szabály szerint számítható:
+
+\begin{equation*}
+    det \mathbf{A} = det \begin{bmatrix} a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} = aei + bfg + cdh - ceg - bdi - afh
+\end{equation*}
+
+\subsubsection{Kifejtési tétel} 
+
+A kifejtési tétel szerint egy $n \times n$-es mátrix determinánsát kiszámolhatjuk az alábbi módon (oszlop szerinti kifejtés):
+
+\begin{equation*}
+    \det \mathbf{A} = \sum_{i = 1}^{n} a_{ij} \cdot (-1)^{i+j} \cdot \det A_{ij}
+\end{equation*}
+
+ahol $\mathbf{A}_{ij}$ az $\mathbf{A}$ mátrix $i$-edik sorát és $j$-edik oszlopát kivéve tartalmazza (Aldetermináns). \newline Ha sor szerint akarjuk kifejteni, akkor a mátrix determinánsa a következőképpen számítható:
+
+\begin{equation*}
+    \det \mathbf{A} = \sum_{j = 1}^{n} a_{ij} \cdot (-1)^{i+j} \cdot \det A_{ij}
+\end{equation*}
+
+Érdemes akkor használni, ha a mátrixban sok 0 található.
+
+\subsubsection{Vandermonde mátrix determinánsa}
+
+A Vandermonde mátrixok determinánsa a következőképpen számítható:
+\begin{equation*}
+    V(x_1, x_2, \ldots, x_n) = \det \begin{bmatrix} 1 & x_1 & x_1^2 & \ldots & x_1^{n-1} \\ 1 & x_2 & x_2^2 & \ldots & x_2^{n-1} \\ 1 & x_3 & x_3^2 & \ldots & x_3^{n-1} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_n & x_n^2 & \ldots & x_n^{n-1} \end{bmatrix} = \prod_{j < i} (x_i - x_j)
+\end{equation*}
+
+Példa: 
+
+\begin{equation*}
+    V(2, 3, 4, 7) = \det \begin{bmatrix} 1 & 2 & 4 & 8 \\ 1 & 3 & 9 & 27 \\ 1 & 4 & 16 & 64 \\ 1 & 7 & 49 & 343 \end{bmatrix} = (7-2)(7-3)(4-2)(4-3)(3-2) = 120
+\end{equation*}
+
+\subsubsection{Determináns tulajdonságai}
+
+\begin{enumerate}
+    \item Ha a mátrixban van csupanulla sor vagy oszlop, akkor a determinánsa 0.
+    \item Ha a mátrixban van két azonos sor/oszlop, akkor a determinánsa 0.
+    \item Ha a mátrix egy sorához/oszlopához hozzáadjuk egy másik sor/oszlop szorzottját egy $\lambda$ számmal, akkor a determinánsa nem változik.
+    \item A mátrix sorát/oszlopát $\lambda$-val szorozva, a determinánsa $\lambda$-szorosa lesz. (Minden sorát $\lambda$-val szorozva, a determinánsa $\lambda^n$-szeres lesz.)
+    \item Ha a mátrixunk felsőháromszög mátrix (a főátló alatt csak 0-ák vannak), akkor a determinánsa a főátló elemeinek szorzata. (Gauss-elimináció)
+    \item Sorcsere esetén a determináns $(-1)$-el szorzódik.
+    \item $det(\mathbf{A}) = det(\mathbf{A}^T)$
+    \item $det(\mathbf{AB}) = det(\mathbf{A}) \cdot det(\mathbf{B})$
+    \item $det(\mathbf{A}^k) = det(\mathbf{A})^k$ \quad és \quad $det(\mathbf{A}^{-1}) = \frac{1}{det(\mathbf{A})}$
+\end{enumerate}
+
+\newpage
+
+\subsubsection{Szinguláris/Reguláris Mátrixok}
+
+Egy $A \in \mathbb{R}^{n \times n}$ mátrix akkor szinguláris, ha a determinánsa 0. Egy mátrix akkor reguláris, ha a determinánsa nem 0.
+
+\begin{enumerate}
+    \item Ha egy mátrix szinguláris, akkor nem invertálható.
+    \item Ha egy mátrix szinguláris, akkor $rank(\mathbf{A}) < n $ \newline Ha reguláris akkor $dim(\mathbf{A}) = rank(\mathbf{A})$.
+    \item Ha a mátrix szinguláris, akkor az $\mathbf{A}\underline{x} = \underline{b}$ egyenletrendszernek vagy vég\-te\-len sok meg\-ol\-dá\-sa van, vagy nem létezik megoldása.\newline Ha a mátrix reguláris, akkor az egyenletrendszernek pontosan egy meg\-ol\-dá\-sa van.
+\end{enumerate}
+
+\subsubsection{Cramer-szabály}
+
+Ha egy $\mathbf{A} \in \mathbb{R}^{n \times n}$ mátrix reguláris, akkor az $\mathbf{A}\underline{x} = \underline{b}$ egyenletrendszer megoldása a következőképpen számítható:
+
+\begin{equation*}
+    x_i = \frac{\det \mathbf{A}_i}{\det \mathbf{A}}
+\end{equation*}
+
+ahol $A_i$ az $A$ mátrix, az $i$-edik oszlopát $\underline{b}$-vel helyettesítve. 
+
+\subsubsection{Sajátvektor és Sajátérték}
+
+Egy $\mathbf{A} \in \mathbb{R}^{n \times n}$ mátrix sajátvektora $\underline{v}$ ($\underline{v} \neq \underline{0}$) és sajátértéke $\lambda$, ha:
+
+\begin{equation*}
+    \mathbf{A}\underline{v} = \lambda\underline{v}
+\end{equation*}
+
+A sajátértékek számítása (\textbf{karakterisztikus egyenlet}):
+
+\begin{equation*}
+    det(\mathbf{A} - \lambda I) = 0
+\end{equation*}
+
+Ennek az egyenletnek a megoldásai lesznek a sajátértékek. Az alábbi e\-gyen\-let\-be behelyettesítve a sajátértékeket, és megoldva az egyenletrendszert, megkapjuk a sajátvektorokat.
+
+\begin{equation*}
+    (\mathbf{A} - \lambda I)\underline{v} = \underline{0}
+\end{equation*}
+
+Mivel végtelen sok megoldása lehet az egyenletrendszereknek, a sa\-ját\-vek\-tor\-ok\-at pa\-ra\-mé\-ter\-es\-en kapjuk meg. A paraméter sosem lehet 0, mert a sajátvektor nem lehet 0.
+
+\subsubsection{Diagonalizálhatóság}
+
+Egy $\mathbf{A} \in \mathbb{R}^{n \times n}$ mátrix akkor diagonalizálható, ha a mátrixnak van $n$ darab li\-ne\-á\-ris\-an füg\-get\-len sajátvektora. Ekkor a mátrixot a sajátértékekkel és sa\-ját\-vek\-tor\-ok\-kal felírhatjuk a következőképpen:
+
+\begin{equation*}
+    \mathbf{D} = diag(\mathbf{A}) = \mathbf{P}^{-1}\mathbf{AP}
+\end{equation*}
+Ahol a $diag(\mathbf{A})$ a mátrix diagonális alakja, $\mathbf{P}$ a sajátvektorokból álló mátrix. 
+
+\begin{equation*}
+    \mathbf{D} = diag(\mathbf{A}) = \begin{bmatrix} \lambda_1 & 0 & \ldots & 0 \\ 0 & \lambda_2 & \ldots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & \lambda_n \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \mathbf{P} = \begin{bmatrix} \underline{v}_1 & \underline{v}_2 & \ldots & \underline{v}_n \end{bmatrix}
+\end{equation*}
+
+Az A mátrix sajátfelbontása:
+\begin{equation*}
+    \mathbf{A} = \mathbf{PDP}^{-1}
+\end{equation*}
+
+Ezt fel tudjuk használni a mátrix egyszerűbb hatványozására is:
+
+\begin{equation*}
+    \mathbf{A}^k = \mathbf{PD}^k\mathbf{P}^{-1} = \mathbf{P} \begin{bmatrix} \lambda_1^k & 0 & \ldots & 0 \\ 0 & \lambda_2^k & \ldots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & \lambda_n^k \end{bmatrix} \mathbf{P}^{-1}
+\end{equation*}
+
+\newpage
+
+\subsection{Lineáris leképezések}
+
+\subsubsection{Definíció}
+
+Legyen $V$ és $W$ két vektortér. Egy $\mathbf{\phi : V \rightarrow W}$ akkor lineáris leképzezés, ha:
+
+\begin{align*}
+    \forall \underline{v}, \underline{w} \in V: \phi(\underline{v} + \underline{w}) &= \phi(\underline{v}) + \phi(\underline{w}) \\
+    \forall \lambda \in F, \forall \underline{v} \in V: \phi (\lambda\underline{v}) &= \lambda\phi(\underline{v})
+\end{align*}
+
+Ilyenkor nem biztos, hogy a teljes $W$ vektortér előáll képekként. $W$ azon elemei, amelyek előállnak a leképezés során, a $\phi$ képtere, vagyis $\mathbf{Im(\phi)}$. \newline A $\phi$ leképezés magtere a $\phi$ leképezésnek azon elemei, amelyek a nullvektorra képződnek le, azaz $\mathbf{Ker(\phi)}$.
+
+\begin{gather*}
+    \mathbf{Ker(\phi)} \leq V \text{ és } \mathbf{Im(\phi)} \leq W, \\
+    \dim(\mathbf{Ker(\phi)}) + \dim(\mathbf{Im(\phi)}) = \dim(V).
+\end{gather*}
+
+\subsubsection{Lineáris leképezések további tulajdonságai}
+
+\begin{enumerate}
+    \item Ha $\phi$ lineáris leképezés, akkor $\phi(0) = 0$.
+    \item Ha $\phi$ lineáris leképezés, akkor $\phi(-\underline{v}) = -\phi(\underline{v})$.
+    \item Ha $\phi$ lineáris leképezés, akkor $\phi(\underline{v}_1 - \underline{v}_2) = \phi(\underline{v}_1) - \phi(\underline{v}_2)$.
+\end{enumerate}
+
+\subsubsection{Lineáris leképezések mátrixa és inverze}
+
+Egy $\mathbf{\phi : V \rightarrow W}$ lineáris leképezés mátrixa a következőképpen számítható:
+
+\begin{equation*}
+    \mathbf{A} = \begin{bmatrix} \phi(\underline{e}_1) & \phi(\underline{e}_2) & \ldots & \phi(\underline{e}_n) \end{bmatrix}
+\end{equation*}
+
+ahol $\underline{e}_1, \underline{e}_2, \ldots, \underline{e}_n$ a $V$ vektortér bázisvektorai.
+
+\vspace{5mm}
+
+Minden lineáris leképezés egy mátrixszal való szorzásnak felel meg. Legyen $\underline{v} \in \mathbf{V}$. Ekkor:
+
+\begin{equation*}
+    \phi(\underline{v}) = \mathbf{A}\underline{v}
+\end{equation*}
+
+Az inverz leképezés mátrixa a következőképpen számítható:
+
+\begin{equation*}
+    \mathbf{A}^{-1} = \begin{bmatrix} \phi^{-1}(\underline{e}_1) & \phi^{-1}(\underline{e}_2) & \ldots & \phi^{-1}(\underline{e}_n) \end{bmatrix} 
+\end{equation*}
+
+Tehát:
+\begin{equation*}
+    \phi^{-1}(\underline{v}) = \mathbf{A}^{-1}\underline{v}   
+\end{equation*}
+
+Ezért egy leképezésnek akkor létezik inverze, ha a leképezés mátrixa invertálható.
+
+\subsubsection{Lineáris leképezések kompozíciója}
+
+Legyen $\mathbf{\phi : V \rightarrow W}$ és $\mathbf{\psi : W \rightarrow U}$ két lineáris leképezés. Ekkor a két leképezés kompozíciója a következőképpen számítható:
+
+\begin{equation*}
+    \mathbf{\psi \circ \phi : V \rightarrow U} = \mathbf{\psi}(\mathbf{\phi}(\underline{v})) = \mathbf{\psi}(\mathbf{A}\underline{v}) = \mathbf{B}(\mathbf{A}\underline{v})
+\end{equation*}
+
+Ezért a két leképezés kompozíciója egy újabb lineáris leképezés, aminek a mátrixa a két leképezés mátrixainak a szorzata.
+
+\begin{equation*}
+    \mathbf{C} = \mathbf{B}\mathbf{A}
+\end{equation*}
+
+\begin{equation*}
+    \psi \circ \phi(\underline{v}) = \psi(\phi(\underline{v})) = \mathbf{B}(\mathbf{A}\underline{v}) = \mathbf{C}\underline{v}  
+\end{equation*}
+
+\subsubsection{Áttérés másik bázisba}
+
+Egy $\mathbf{\phi : V \rightarrow W}$ lineáris leképezésének $b_1,b_2,\ldots,b_n$ bázisban felírt mátrixát úgy kapjuk meg, mint a bázisvektorokra való képzésnél:
+
+\begin{equation*}
+    \mathbf{B} = \begin{bmatrix} \phi(\underline{b}_1) & \phi(\underline{b}_2) & \ldots & \phi(\underline{b}_n) \end{bmatrix}
+\end{equation*}
+
+Ha egy újabb $a_1, a_2, \ldots, a_n$ bázisban szeretnénk felírni a mátrixot, akkor a következőképpen számítható:
+
+\begin{equation*}
+    \mathbf{A} = \begin{bmatrix} \phi(\underline{a}_1) & \phi(\underline{a}_2) & \ldots & \phi(\underline{a}_n) \end{bmatrix}
+\end{equation*}
+
+Ha egyenesen az első bázisból szeretnénk a lineáris leképezést a másodikba, akkor a kö\-vet\-kez\-ő\-kép\-pen szá\-mít\-hat\-ó az új mátrix:
+
+\begin{equation*}
+    \mathbf{A} = \mathbf{P}^{-1}\mathbf{B}\mathbf{P}
+\end{equation*}
+
+Ahol P az (régi bázis szerinti) új bázisvektorokat tartalmazó mátrix.
+
+Tehát a leképezés $\underline{v} \in \mathbf{V}$ vektorra a következőképpen számítható:
+
+\begin{equation*}
+    \phi(\underline{v}) = \mathbf{A}\underline{v} = (\mathbf{P}^{-1}\mathbf{B}\mathbf{P})\underline{v}
+\end{equation*}
+
+Itt $\mathbf{A}$ és $\mathbf{B}$ ugyannak a leképezésnek más bázisban való mátrixai.
+
+\newpage
+
+\subsubsection{Nevezetes lineáris leképezések}
+
+A forgatások mátrixai tengelyek szerint 3D-ben ($\theta$ szögben, $\lambda$ nyújtással):
+
+\begin{equation*}
+    \mathbf{R}_x = \begin{bmatrix} \lambda & 0 & 0 \\ 0 & \cos(\theta) & -\sin(\theta) \\ 0 & \sin(\theta) & \cos(\theta) \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \mathbf{R}_y = \begin{bmatrix} \cos(\theta) & 0 & \sin(\theta) \\ 0 & \lambda & 0 \\ -\sin(\theta) & 0 & \cos(\theta) \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \mathbf{R}_z = \begin{bmatrix} \cos(\theta) & -\sin(\theta) & 0 \\ \sin(\theta) & \cos(\theta) & 0 \\ 0 & 0 & \lambda \end{bmatrix}
+\end{equation*}
+
+Vetítés mátrixa $\underline{n}$ normálvektorú egyenesre ($\mathbf{P}$):
+
+\begin{equation*}
+    \mathbf{P} = \frac{\underline{n} \circ \underline{n}}{\left\lVert \underline{n} \right\rVert^2} = \frac{1}{\left\lVert \underline{n} \right\rVert^2} \begin{bmatrix} n_1^2 & n_1n_2 & n_1n_3 \\ n_1n_2 & n_2^2 & n_2n_3 \\ n_1n_3 & n_2n_3 & n_3^2 \end{bmatrix}
+\end{equation*}
+
+Vetítés mátrixa $\underline{n}$ normálvektorú síkra ($\mathbf{A}$):
+
+\begin{equation*}
+    \mathbf{A} = \mathbf{I} - \mathbf{P} = \mathbf{I} - \frac{\underline{n} \circ \underline{n}}{\left\lVert \underline{n} \right\rVert^2} 
+\end{equation*}
+
+Tükrözés mátrixa egy $\underline{n}$ normálvektorú egyenesre ($\mathbf{M}$):
+
+\begin{equation*}
+    \mathbf{M} = 2\mathbf{P} - \mathbf{I} = 2\frac{\underline{n} \circ \underline{n}}{\left\lVert \underline{n} \right\rVert^2} - \mathbf{I}
+\end{equation*}
+
+Tükrözés mátrixa egy $\underline{n}$ normálvektorú síkra ($\mathbf{N}$):
+
+\begin{equation*}
+    \mathbf{N} = \mathbf{I} - 2\mathbf{P} = \mathbf{I} - 2\frac{\underline{n} \circ \underline{n}}{\left\lVert \underline{n} \right\rVert^2}
+\end{equation*}
+
+\newpage
+
+\subsection{Euklideszi terek}
+
+\subsubsection{Skalárszorzások}
+
+Euklideszi tereknek nevezzük azokat a vektortereket \textbf{T} számtest felett, amikre a vektorréraxiómákon kívül teljesül a következő skaláris szorzat definíciója:
+
+\begin{enumerate}
+    \item $\forall \underline{v}, \underline{w} \in V: (\underline{v}, \underline{w}) : \mathbf{V \times V \rightarrow T}$
+    \item  $\forall \underline{v} \in V:  \left\langle \underline{v}, \underline{v} \right\rangle = 0 \Leftrightarrow \underline{v} = \underline{0}$
+    \item $\forall \underline{v}, \underline{w} \in V: \left\langle \underline{v}, \underline{w} \right\rangle = \overline{\left\langle \underline{w}, \underline{v} \right\rangle}$ (komplex konjugált, ha $T = \mathbb{R}$, akkor kommutatív).
+    \item $\forall \underline{v}, \underline{w} \in V,\forall \lambda \in T: \left\langle \lambda \underline{v}, \underline{w} \right\rangle =\lambda \left\langle  \underline{v}, \underline{w} \right\rangle $
+    \item $\forall \underline{v}, \underline{w} \in V,\forall \lambda \in T: \left\langle \underline{v}, \lambda \underline{w} \right\rangle = \overline{\lambda} \left\langle  \underline{v}, \underline{w} \right\rangle $
+    \item $\forall \underline{u}, \underline{v}, \underline{w} \in V: \left\langle \underline{u} + \underline{v}, \underline{w} \right\rangle = \left\langle \underline{u}, \underline{w} \right\rangle \left\langle \underline{v}, \underline{w} \right\rangle$
+\end{enumerate}     
+
+Minden euklideszi térben van egyfajta hossz definíció, amit \textbf{e\-uk\-lid\-eszi nor\-má\-nak} hí\-vunk ezt a következőképpen kapjuk meg:
+
+\begin{equation*}
+    \left\lVert \underline{a} \right\rVert = \sqrt{\left\langle \underline{a},\underline{a} \right\rangle } 
+\end{equation*}
+
+\subsubsection{Cauchy-Schwarz egyenlőtlenség}
+
+Minden euklideszi térben teljesül a Cauchy-Schwarz egyenlőtlenség:
+
+\begin{equation*}
+    \left\lvert \left\langle \underline{v}, \underline{w} \right\rangle \right\rvert \leq \left\lVert \underline{v} \right\rVert \cdot \left\lVert \underline{w} \right\rVert
+\end{equation*}
+
+Az egyenlőség csak akkor áll fent ha $\underline{v}$ és $\underline{w}$ lineárisan összefüggő.
+
+\newpage
+
+\section{Végtelen sorok, sorbafejtések}
+
+\subsection{Sorok konvergenciája}
+
+\subsubsection{Definíció}
+
+Egy $\sum_{n=1}^\infty a_n$ sor konvergens, ha létezik olyan $A \in \mathbb{R}$, hogy az $S_n = \sum_{k=1}^{n} a_k$ sorozat konvergál $A$-hoz, azaz:
+
+\begin{equation*}
+    \lim_{n \to \infty} S_n = A
+\end{equation*}
+
+\subsubsection{Geometriai sor}
+
+A geometriai sor akkor konvergens, ha $\left\lvert q \right\rvert < 1$. Ez esetben:
+
+\begin{equation*}
+    \sum_{n=0}^{\infty} a_1 q^n = \frac{a_1}{1-q} \quad \text{ha } \left\lvert q \right\rvert < 1
+\end{equation*}
+
+Ahol az $a_1$ az első tag, $q$ a hányados.
+
+Ha $\left\lvert q \right\rvert \geq 1$, akkor a sor divergens.
+
+\subsection{Konvergencia kritériumok}
+
+\subsubsection{Konvergencia szükséges feltétele}
+
+Ha $\lim\limits_{n\rightarrow\infty} a_n \neq 0$, akkor  $\sum_{n=1}^{\infty} a_n$ divergens.
+
+\subsubsection{Leibniz-féle konvergencia kritérium}
+
+Ha az $a_n$ sorozat monoton csökkenő és $\lim_{n \to \infty} a_n = 0$, akkor a $\sum_{n=1}^\infty (-1)^n a_n$ sor konvergens.
+
+\subsubsection{Abszolút konvergencia}
+
+Egy $\sum_{n=1}^{\infty} a_n$ sor abszolút konvergens, ha a $\sum_{n=1}^{\infty} \left\lvert a_n \right\rvert$ sor konvergens. Fontos, hogy egy sor lehet konvergens akkor is, ha nem abszolút konvergens, ilyenkor \textbf{feltételesen konvergens}.
+
+\subsubsection{Gyök kritérium}
+
+Egy $\sum_{n=1}^{\infty} a_n$ sorra, ha létezik olyan $q \in \mathbb{R}$, hogy $\lim_{n \to \infty} \sqrt[n]{\left\lvert a_n \right\rvert} = q$, akkor:
+
+\begin{enumerate}
+    \item Ha $q < 1$, akkor a sor abszolút konvergens.
+    \item Ha $q > 1$, akkor a sor divergens.
+    \item Ha $q = 1$, akkor a sor konvergencia szempontjából nem dönthető el.
+\end{enumerate}
+
+\subsubsection{Hányados kritérium}
+
+Egy $\sum_{n=1}^{\infty} a_n$ sorra, ha létezik olyan $q \in \mathbb{R}$, hogy $\lim_{n \to \infty} \left\lvert \frac{a_{n+1}}{a_n} \right\rvert = q$, akkor:
+
+\begin{enumerate}
+    \item Ha $q < 1$, akkor a sor abszolút konvergens.
+    \item Ha $q > 1$, akkor a sor divergens.
+    \item Ha $q = 1$, akkor a sor konvergencia szempontjából nem dönthető el.
+\end{enumerate}
+
+\subsubsection{Összehasonlítási kritérium}
+
+Legyen $\sum_{n=1}^{\infty} a_n$ és $\sum_{n=1}^{\infty} b_n$ két sor. Ha $0 \leq a_n \leq b_n$ minden $n$-re:
+\vspace{4mm}
+\newline
+\textbf{Majoráns kritérium:}
+\begin{equation*}
+    \sum_{n=1}^{\infty} b_n \text{ konvergens} \Rightarrow \sum_{n=1}^{\infty} a_n \text{ konvergens}
+\end{equation*}
+
+\textbf{Minoráns kritérium:}
+\begin{equation*}
+    \sum_{n=1}^{\infty} a_n \text{ divergens} \Rightarrow \sum_{n=1}^{\infty} b_n \text{ divergens}
+\end{equation*}
+
+Különleges eset (hasznos ennél a kritériumnál, ha a polinom/polinom eset van):
+
+\begin{equation*}
+   \sum_{n=1}^{\infty} \frac{1}{n^{\alpha}} \text{ konvergens ha } \alpha > 1 \text{ és divergens ha } \alpha \leq 1
+\end{equation*}
+
+\subsubsection{Integrál kritérium}
+
+Legyen $f: [1, \infty) \rightarrow \mathbb{R}$ monoton csökkenő és pozitív függvény. Ekkor:
+
+\begin{equation*}
+    \sum_{n=1}^{\infty} f(n) \text{ konvergens} \Leftrightarrow \exists \int_{1}^{\infty} f(x) dx \text{ és véges}
+\end{equation*}
+
+\newpage
+
+\subsection{Sorok összege}
+
+\subsubsection{Teleszkopikus sorok összege}
+
+A teleszkopikus sorok olyan sorok, amiknél ki kell bontani az összeget, és a legtöbb tag kiesik. Ilyenkor érdemes felsorolni az első és az utolsó pár tagot. Példa:
+
+\begin{equation*}
+    \sum_{n=1}^{\infty} \left(\frac{1}{n(n+1)} \right) = \frac{1}{1} - \frac{1}{2}+ \frac{1}{2} - \frac{1}{3}  + \ldots +  \frac{1}{n} - \frac{1}{n+1}
+\end{equation*}
+
+\begin{equation*}
+    = \lim_{n \to \infty} \left(1 - \frac{1}{n+1}\right) = 1
+\end{equation*}
+
+
+Ilyenkor szükség lehet a parciális törtekre bontásra, ugyanúgy mint az integrálásnál.
+
+\newpage
+
+\subsection{Hatványsorok}
+
+\subsubsection{Definíció}
+
+Egy $\sum_{n=0}^{\infty} a_n(x - x_0)^n$ sor a hatványsor, ahol $a_n$ konstansok, $x$ a változó, $x_0$ pedig a hatványsor középpontja.
+
+\subsubsection{Konvergencia tartomány}
+
+Általában hatványsorok konvergenciatartományát a gyök\-kri\-té\-ri\-um\-mal szá\-mol\-juk ki. Ha vé\-gig\-csi\-nál\-juk
+gyökkritériummal és be\-he\-lyet\-te\-sít\-jük az $x_0$ kö\-zép\-pon\-tot, akkor a kon\-ver\-gen\-cia tartományt kapjuk meg.
+
+A konvergenciasugár (r) a következőképpen számítható:
+
+\begin{equation*}
+    r = \lim_{n \to \infty} \sqrt[n]{\left\lvert a_n \right\rvert}
+\end{equation*}
+
+\vspace{4mm}
+
+A hatványsor konvergencia tartománya (R) a következőképpen is számítható (Cauchy-Hadamard-tétel):
+
+\begin{equation*}
+    R = r^{-1} =\frac{1}{\lim_{n \to \infty} \sqrt[n]{\left\lvert a_n \right\rvert}}
+\end{equation*}
+
+\vspace{4mm}
+
+A hatványsor konvergencia tartománya (R) a következőképpen számítható (hányados kritérium):
+
+\begin{equation*}
+    R = r =\lim_{n \to \infty} \left\lvert \frac{a_n}{a_{n+1}} \right\rvert
+\end{equation*}
+
+Ahol $R$ a konvergencia tartomány, ha $x_0$ a középpont.
+
+\vspace{4mm}
+
+A konvergencia tartomány szélein külön meg kell vizsgálni, az eredeti sorba behelyettesítve az $x_0 \pm R$ értékeket az $x$-helyére. A tartományon belül mindenhol abszolút konvergens a sor.
+
+\vspace{4mm}
+
+A konvergenciasugár lehet végtelen is, ilyenkor a sor minden valós számra konvergens. Ekkor a konvergencia tartomány a valós számok halmaza.
+
+\newpage
+
+\subsection{Taylor sorok, Mclarin sorok}
+
+\subsubsection{Definíció}
+
+Egy $f(x)$ függvény Taylor sorfejtése a következőképpen számítható:
+
+\begin{equation*}
+    f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
+\end{equation*}
+
+Ahol $f^{(n)}(x_0)$ az n-edik derivált értéke az $x_0$ pontban.
+A \textbf{Mclarin sorok} a Taylor sorok speciális esetei, ahol $x_0 = 0$.
+
+\subsubsection{Nevezetes Taylor sorok $x_0$ körül}
+
+\begin{eqnarray*}
+    e^x &=& \sum_{n=0}^{\infty} \frac{1}{n!} (x-x_0)^n \\
+    \sin(x) &=& \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} (x-x_0)^{2n+1} \\
+    \cos(x) &=& \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} (x-x_0)^{2n} \\
+    \ln(x) &=& \sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n} (x-x_0)^n \\
+    (1+x)^\alpha &=& \sum_{n=0}^{\infty} \binom{\alpha}{n} x^n \\
+    \cosh(x) &=& \sum_{n=0}^{\infty} \frac{1}{(2n)!} (x-x_0)^{2n} \\
+    \sinh(x) &=& \sum_{n=0}^{\infty} \frac{1}{(2n+1)!} (x-x_0)^{2n+1} \\
+\end{eqnarray*}
+
+\newpage
+
+\subsubsection{Taylor sorok előállítása deriválással}
+
+Ha egy olyan függvényt kell sorba fejteni aminek nem tudjuk a Taylor sorát, de a deriváltjáét tudjuk, akkor a következőképpen számítható a sor:
+
+\begin{equation*}
+    f(x) = \int_{0}^{x} f'(t) dt = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
+\end{equation*}
+
+Erre a módszerre példa a $f(x) = \arcsin(x)$ függvény sorba fejtése ($x_0=0$ körül):
+
+\begin{equation*}
+    f'(x) = \frac{1}{\sqrt{1-x^2}} \Rightarrow f(x) = \int_{0}^{x} \frac{1}{\sqrt{1-t^2}} dt = \int_{0}^{x} \sum_{n=0}^{\infty} \binom{-1/2}{n} t^n dt
+\end{equation*}
+
+\begin{equation*}
+    = \sum_{n=0}^{\infty} \binom{-1/2}{n}  \int_{0}^{x} t^n dt =\sum_{n=0}^{\infty} \binom{-1/2}{n} \frac{x^{n+1}}{n+1}
+\end{equation*}
+
+\newpage
+
+\subsection{Fourier Sorok}
+
+\subsubsection{Hasznos Trigonometria alapok}
+\begin{eqnarray*}
+    \sin(\alpha)\cos(\beta) &=& \frac{1}{2} \left( \sin(\alpha + \beta) + \sin(\alpha - \beta) \right) \\
+    \cos(\alpha)\sin(\beta) &=& \frac{1}{2} \left( \sin(\alpha + \beta) - \sin(\alpha - \beta) \right) \\
+    \sin(\alpha)\sin(\beta) &=& \frac{1}{2} \left( \cos(\alpha - \beta) - \cos(\alpha + \beta) \right) \\
+    \cos(\alpha)\cos(\beta) &=& \frac{1}{2} \left( \cos(\alpha - \beta) + \cos(\alpha + \beta) \right) \\
+    \sin(\alpha) &=& \frac{e^{i\alpha} - e^{-i\alpha}}{2i} \\
+    \cos(\alpha) &=& \frac{e^{i\alpha} + e^{-i\alpha}}{2}
+\end{eqnarray*}
+
+\begin{align*}
+    \int_{-\pi}^{\pi} \sin(kx) dx &= 0
+\end{align*}
+
+
+\begin{align*}
+    \int_{-\pi}^{\pi} \cos(kx) dx &= 0
+\end{align*}
+
+\begin{align*}
+    \int_{-\pi}^{\pi} f(x) \cos(kx) dx &= \int_{a -\pi}^{a+ \pi} f(x) \cos(kx) dx \text{ (tetszőleges a-ra)}
+\end{align*}
+
+
+\begin{align*}
+    \int_{-\pi}^{\pi} f(x) \sin(kx) dx &= \int_{a -\pi}^{a+ \pi} f(x) \sin(kx) dx \text{ (tetszőleges a-ra)}
+\end{align*}
+
+\vspace{4mm}
+
+Trükk az addíciós tételek megjegyzésére: Vegyük 2D-ben az $\alpha$ és $\beta$ szögekkel való forgatás mátrixát.
+
+\begin{equation*}
+    \begin{bmatrix} \cos(\alpha) & -\sin(\alpha) \\ \sin(\alpha) & \cos(\alpha) \end{bmatrix} \begin{bmatrix} \cos(\beta) & -\sin(\beta) \\ \sin(\beta) & \cos(\beta) \end{bmatrix} = \begin{bmatrix} \cos(\alpha + \beta) & -\sin(\alpha + \beta) \\ \sin(\alpha + \beta) & \cos(\alpha + \beta) \end{bmatrix}
+\end{equation*}
+
+Ekkor a szorzást levezetve megkapjuk az addíciós tételeket kifejtve.
+
+\newpage
+
+\subsubsection{Definíció}
+A $\cos(kx)$ és a $\sin(kx)$ ortonormált bázist alkotnak a $[-\pi, \pi]$ intervallumon. Tehát bármely $f(x)$ függvényt le tudunk írni ezen függvények lineáris kombinációjaként:
+
+\begin{equation*}
+    f(x) = a_0 + \sum_{k=1}^{\infty} \left( a_k \cos(kx) + b_k \sin(kx) \right)
+\end{equation*}
+
+Ahol az $a_k$ és $b_k$ együtthatókat a következőképpen számíthatjuk (C egy általunk választott konstans, ahol a függvény ismert, általában -$\pi$):
+
+\begin{equation*}
+    a_0 = \frac{1}{2\pi} \int_{C}^{C+2\pi} f(x) dx
+\end{equation*}
+
+\begin{equation*}
+    b_0= \frac{1}{2}
+\end{equation*}
+
+\begin{equation*}
+    a_k = \frac{1}{\pi} \int_{C}^{C+2\pi} f(x) \cos(kx) dx
+\end{equation*}
+
+\begin{equation*}
+    b_k = \frac{1}{\pi} \int_{C}^{C+2\pi} f(x) \sin(kx) dx
+\end{equation*}
+
+\vspace{4mm}
+
+\textbf{Ha $f(x)$ páros, akkor a $b_k$ együtthatók 0-k lesznek}, mert a $\sin(kx)$ függ\-vény páratlan, és a páros függvényekkel való szorzatuk integrálja 0.
+
+\textbf{Ha $f(x)$ páratlan, akkor a $a_k$ együtthatók 0-k lesznek}, mert a $\cos(kx)$ függ\-vény páros, és a páratlan függvényekkel való szorzatuk integrálja 0.
+
+\subsubsection{Fourier sorok komplex alakja}
+
+A Fourier sorokat komplex alakban is fel lehet írni a következőképpen:
+
+\begin{equation*}
+    f(x) = \frac{a_0}{2} + \sum_{k=1}^{\infty} a_k \frac{e^{ikx} + e^{-ikx}}{2} + b_k \frac{e^{ikx} - e^{-ikx}}{2i}
+\end{equation*}
+
+\begin{equation*}
+    = \sum_{k=-\infty}^{\infty} c_k e^{ikx}
+\end{equation*}
+
+Ahol a $c_k$ együtthatókat a következőképpen számíthatjuk:
+
+\begin{equation*}
+    c_k = \frac{1}{2} \left( a_k - ib_k \right) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-ikx} dx
+\end{equation*}
+
+\begin{equation*}
+    c_{-k} = \frac{1}{2} \left( a_k + ib_k \right)
+\end{equation*}
+
+\newpage
+
+\section{Többváltozós analízis}
+
+
+
+\end{document}
