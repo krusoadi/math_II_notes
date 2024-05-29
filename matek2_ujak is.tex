@@ -933,7 +933,7 @@ Ezek rendre a következőképpen néznek ki:
 A Hesse-mátrix a következőképpen számítható:
 
 \begin{equation*}
-    H(f) = \begin{bmatrix} f''_{xx} & f''_{xy} \\ f''_{yx} & f''_{yy} \end{bmatrix}
+    H(f) = \begin{bmatrix} f''_{xx} & f''_{xy} \\ f''_{yx} & f''_{yy} \end{bmatrix} = \begin{bmatrix} \frac{\partial^2 f}{\partial x^2} & \frac{\partial^2 f}{\partial x \partial y} \\ \frac{\partial^2 f}{\partial y \partial x} & \frac{\partial^2 f}{\partial y^2} \end{bmatrix}
 \end{equation*}
 
 A Hesse mátrix determinánsa a következőket árulja el a szélsőértékről:
@@ -944,9 +944,15 @@ A Hesse mátrix determinánsa a következőket árulja el a szélsőértékről:
     \item Ha a determináns 0, akkor nem dönthető el, további vizsgálat kell.
 \end{enumerate}
 
-\newpage
+\vspace{4mm}
 
-\subsubsection{Lokális szélsőértékek megtalása}
+Hesse mátrix n változós függvényekre:
+
+\begin{equation*}
+    H(f) = \begin{bmatrix} \frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2} & \ldots & \frac{\partial^2 f}{\partial x_1 \partial x_n} \\ \frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2} & \ldots & \frac{\partial^2 f}{\partial x_2 \partial x_n} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial^2 f}{\partial x_n \partial x_1} & \frac{\partial^2 f}{\partial x_n \partial x_2} & \ldots & \frac{\partial^2 f}{\partial x_n^2} \end{bmatrix}
+\end{equation*}
+
+\subsubsection{Lokális szélsőértékek megtalálása}
 
 A lokális szélsőértékeket a következőképpen számíthatjuk:
 
@@ -960,5 +966,53 @@ A lokális szélsőértékeket a következőképpen számíthatjuk:
     \item Ha a determináns 0, akkor nem dönthető el, további vizsgálat kell.
 \end{enumerate}
 
+\subsubsection{Feltételes szélsőértékek megtalálása, Lagrange multiplikátor módszer}
+
+Ha egy függvénynek egy feltétel szerint ke\-res\-sük a szél\-ső\-ér\-ték\-e\-it, ak\-kor a kö\-vet\-ke\-ző\-kép\-pen szá\-mít\-hat\-juk ki:
+
+Legyen $f(x, y)$ a függvényünk, és legyen $g(x, y)$ a feltételünk. Ekkor a Lagrange-függvény a következőképpen néz ki:
+
+\begin{equation*}
+    L(x, y, \lambda) = f(x, y) - \lambda g(x, y)
+\end{equation*}
+
+Ezután a szélsőértékeket a következőképpen számíthatjuk:
+
+\begin{enumerate}
+    \item Számítsuk ki a Lagrange-függvény parciális deriváltjait.
+    \item Rendezzük egy homogén egyenletrendszerbe a parciális deriváltakat, és oldjuk meg.
+    \item Így eggyel kevesebb egyenlet van mint változó ezért a feltétel egyenletét is felhasználjuk.
+    \item Megkapjuk a stancionárius pontokat, ahol az $L(x, y, \lambda)$ függvény feltétel szerinti szélsőértékei lehetnek.
+    \item Behelyettesítjük a Hesse-mátrixba a stancionárius pontoka és kiértékeljük a szélsőértékeket.
+\end{enumerate}
+
+\subsection{Szintvonalak}
+
+Egy többváltozós függvényt szintvonalakkal is le tudunk írni. A szintvonalak a következőképpen néznek ki:
+
+\begin{equation*}
+    f(x, y) = C \quad \text{ahol C egy konstans}
+\end{equation*}
+
+A szintvonalakat ábrázolva a függvény értékei egyenlőek lesznek a szintvonalakon, hiszen egy síkidom egyenletét írják le.
+
+Ha a szintvonalak belülről kifele sűrűsödnek, és a függvény belefe növekedik, akkor a függvény konkáv, 
+ha kifele növekedik, akkor konvex, ha egyenletesen sűrűsödnek, akkor egyik sem (lineáris).
+
+\vspace{4mm}
+
+Lehetséges hogy egy szintvonal nem létezik, vagy nincs ott megoldása a függvénynek, ekkor ott a függvény nem értelmezhető.
+
+\subsection{Érintősík}
+
+Míg egyváltozós függvényeknél érintőt kerestünk, kétváltozósnál érintősíkot kerestünk. Az érintősík egy adott pontban érinti a függvényt, és a függvény értékének a változását mutatja az adott pontban.
+
+\vspace{4mm}
+
+Az érintősík egyenlete a következőképpen számítható:
+
+\begin{equation*}
+    z = f(x_0, y_0) + f'_x(x_0, y_0)(x - x_0) + f'_y(x_0, y_0)(y - y_0)
+\end{equation*} 
 
 \end{document}
