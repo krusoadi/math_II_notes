@@ -859,4 +859,106 @@ Ahol a $c_k$ együtthatókat a következőképpen számíthatjuk:
 
 \section{Többváltozós analízis}
 
+\subsection{Definíció, Ábrázolás}
+
+Egy $f: \mathbb{R}^n \rightarrow \mathbb{R}$ függvényt többváltozós függvénynek hívunk. Az $n=2$ esetben a függvényt ábrázolhatjuk 3D-ben, az $n=3$ esetben 4D-ben.
+
+Ábrázolásnál színskálával is ábrázolhatjuk a függvény értékeit, ahol a színek a függvény értékét jelzik., de akár wireframe-el is ábrázolhatjuk a függvényt.
+
+\subsection{Parciális deriváltak}
+
+Egy $f: \mathbb{R}^n \rightarrow \mathbb{R}$ függvény parciális deriváltjait a következőképpen számíthatjuk:
+
+\begin{equation*}
+    \frac{\partial f}{\partial x_i} = \lim_{h \to 0} \frac{f(x_1, x_2, \ldots, x_i + h, \ldots, x_n) - f(x_1, x_2, \ldots, x_i, \ldots, x_n)}{h}
+\end{equation*}
+
+Lényegében a parciális deriváltak a függvény értékének a változását mutatják az adott változó szerint. 
+A deriváláskor a többi változót konstansnak tekintjük, és eszerint deriválunk.
+
+\vspace{4mm}
+
+Erre egy példa a $f(x, y) = yx^2 + y^2$ függvényre:
+
+\begin{equation*}
+    \frac{\partial f}{\partial x} = 2yx
+\end{equation*}
+
+\begin{equation*}
+    \frac{\partial f}{\partial y} = x^2 + 2y
+\end{equation*}
+
+\subsubsection{Első- és másodrendű parciális deriváltak}
+
+Az elsőrendű parciális deriváltakat a következőképpen jelöljük:
+
+\begin{eqnarray*}
+    f'_x &=& \frac{\partial f}{\partial x} \\
+    f'_y &=& \frac{\partial f}{\partial y}
+\end{eqnarray*}
+
+A másodrendű deriváltakat a következőképpen jelöljük:
+
+\begin{eqnarray*}
+    f''_{xx} &=& \frac{\partial^2 f}{\partial x^2} \\
+    f''_{yy} &=& \frac{\partial^2 f}{\partial y^2} \\
+    f''_{xy} &=& \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x}
+\end{eqnarray*}
+
+Az első kettő a tisztán másodrendű parciális derivált, az utolsó pedig a vegyes másodrendű parciális derivált.
+
+Ha a vegyes másodrendű parciális deriváltak megegyeznek, akkor a függvény \textbf{kétszer totálisan deriválható (Young-tétel)}.
+
+\subsection{Lokális szélsőértéktípusok}
+
+Szélsőérték típusokból 3 féle létezik:
+
+\begin{enumerate}
+    \item Lokális minimum
+    \item Lokális maximum
+    \item Nyereg-pont
+\end{enumerate}
+
+Ezek rendre a következőképpen néznek ki:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{pics/szelsoertek.png}
+    \caption{Lokális szélsőértéktípusok}
+    \label{fig:szelsoertek}
+\end{figure}
+
+\subsubsection{Hesse-mátrix}
+
+A Hesse-mátrix a következőképpen számítható:
+
+\begin{equation*}
+    H(f) = \begin{bmatrix} f''_{xx} & f''_{xy} \\ f''_{yx} & f''_{yy} \end{bmatrix}
+\end{equation*}
+
+A Hesse mátrix determinánsa a következőket árulja el a szélsőértékről:
+
+\begin{enumerate}
+    \item Ha a determináns pozitív, akkor szélsőértéke van
+    \item Ha a determináns negatív, akkor nyeregpontja van.
+    \item Ha a determináns 0, akkor nem dönthető el, további vizsgálat kell.
+\end{enumerate}
+
+\newpage
+
+\subsubsection{Lokális szélsőértékek megtalása}
+
+A lokális szélsőértékeket a következőképpen számíthatjuk:
+
+\begin{enumerate}
+    \item Számítsuk ki a függvény parciális deriváltjait.
+    \item Rendezzük egy homogén egyenletrendszerbe a parciális deriváltakat, és oldjuk meg.
+    \item Az így kapott pontok a stancionárius pontok, ahol a függvény szélsőértékei lehetnek.
+    \item A stancionárius pontokat helyettesítsük a Hesse-mátrixba.
+    \item Ha az első sarokfőminor ($\mathbf{H_{11}}$) és a második sarokfőminor (determináns) is pozitív, akkor \textbf{lokális minimumja van}.
+    \item Ha az első sarokfőminor ($\mathbf{H_{11}}$) negatív és a második sarokfőminor (determináns) pozitív, akkor \textbf{lokális maximumja van}.
+    \item Ha a determináns 0, akkor nem dönthető el, további vizsgálat kell.
+\end{enumerate}
+
+
 \end{document}
