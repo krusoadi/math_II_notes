@@ -1,7 +1,10 @@
 \documentclass{article}
+
+\usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{mathtools}
+\usepackage{esint}
 
 \title{MATEK 2 Jegyzet}
 \author{Krusóczki Ádám}
@@ -1069,5 +1072,138 @@ Ez akár n változós implicit függvényekre is alkalmazható:
 \begin{equation*}
     x_i' = \frac{\partial x_i}{\partial x_j} = -\frac{\frac{\partial F}{\partial x_j}}{\frac{\partial F}{\partial x_i}}
 \end{equation*}
+
+\newpage
+
+\subsection{Többváltozós függvények határértékszámítása}
+
+\subsubsection{Definció kétváltozós függvényekre}
+
+B az $f(x,y)$ határértéke a $(x_0, y_0)$ pontban, ha minden $\varepsilon  > 0$-hoz létezik $\delta > 0$ úgy, hogy ha $(x,y) \in B_{\delta}((x_0, y_0))$ és $(x,y) \neq (x_0, y_0)$, vagyis:
+
+\begin{equation*}
+    0 < \sqrt{(x-x_0)^2 + (y-y_0)^2} < \delta
+\end{equation*}
+
+ekkor:
+
+\begin{equation*}
+    \left\lvert f(x,y) - B \right\rvert < \varepsilon
+\end{equation*}
+
+\vspace{4mm}
+
+Ezeknél a feladatoknál hasznos lehet a háromszög egyenlőtlenség:
+
+\begin{equation*}
+    \left\lvert a + b \right\rvert \leq \left\lvert a \right\rvert + \left\lvert b \right\rvert
+\end{equation*}
+
+\subsubsection{egyszerűbb határértékek számítása}
+
+Lehetséges (nem ezen az egyetemen), hogy behelyettesítjük x-et és y-t és létezik a határérték:
+
+\begin{equation*}
+    \lim_{(x,y) \to (x_0, y_0)} f(x,y) = f(x_0, y_0)  =B
+\end{equation*}
+
+\vspace{4mm}
+
+Ha polinom/polinom függvényünk van ak\-kor né\-ha a \textbf{szor\-zattá a\-lak\-ít\-ás} se\-gít\-het:
+
+\begin{equation*}
+    \lim_{(x,y) \to (4, 0)} \frac{x^2 y -4xy}{yx^2 -16y} = \lim_{(x,y) \to (4, 0)} \frac{y(x^2-4x)}{y(x^2 -16)} = \lim_{(x,y) \to (4, 0)} \frac{x}{x-4} = \frac{1}{2}
+\end{equation*}
+
+\subsubsection{Egyenes mentén való határérték számítása}
+
+Veszünk egy $y = mx + b$ egyenest ami érinti $x$-et és $y$-t, és ezen az egyenesen szá\-mol\-juk a határ\-ér\-téket. Ek\-kor a kö\-vet\-ke\-ző\-kép\-pen számíthatjuk a határértéket:
+
+\begin{equation*}
+    \lim_{(x,y) \to (x_0, y_0)} f(x,y) = \lim_{x \to x_0} f(x, mx + b)
+\end{equation*}
+
+Itt sajnos ahhoz hogy létezzen a határérték, minden $m$ értékre a ha\-tár\-ér\-ték\-nek ugyanaznak kell lennie. Ha ez nem teljesül, akkor a határérték nem létezik. 
+De ha nem függ $m$-től, akkor a határérték létezik. Ne felejtsük el a konstans egyenest se.
+
+%TODO lecsekkolni hogy jó-e
+
+\subsubsection{Átviteli elv}
+
+Ha egy függvény egyenletesen konvergens egy sorozatban, akkor a határértéke a függvénynek a sorozat határértékével egyenlő.
+
+\vspace{4mm}
+
+Ennek gyakori fajtáka a polárkoordinátás helyettesítés:
+
+\begin{equation*}
+    x = \rho \cos(\phi) \quad y = \rho \sin(\phi) \quad \rho \to 0 \quad \phi = \text{tetszőleges konstans}
+\end{equation*}
+
+Ezeket felhasználva a határértéket könnyen ki tudjuk számolni (mivel a $\cos(\phi)$, és a $\sin(\phi)$ véges).
+
+\subsection{Totális és parciális deriválhatóság}
+
+Az $f(x,y)$ függvény totálisan deriválható $(x_0, y_0)$ helyen ha $\exists A,B \in \mathbb{R}$ amire igaz, hogy:
+
+\begin{equation*}
+    \lim_{(x,y) \to (x_0, y_0)} \frac{f(x,y) - (A(x-x_0) + B(y-y_0) + f(x_0, y_0))}{\sqrt{(x-x_0)^2 + (y-y_0)^2}} = 0
+\end{equation*}
+
+Ha itt a határértkben $y$-t $y_0$-nak vagy $x$-et $x_0$-nak vá\-laszt\-juk, ak\-kor a par\-ci\-á\-lis de\-ri\-vál\-ta\-kat kapjuk:
+
+\begin{equation*}
+    \lim_{x \to x_0} \frac{f(x,y_0) - f(x_0, y_0)}{x-x_0} = A
+\end{equation*}
+
+\begin{equation*}
+    \lim_{y \to y_0} \frac{f(x_0,y) - f(x_0, y_0)}{y-y_0} = B
+\end{equation*}
+
+Itt az A és B értékek a függvény parciális deriváltjai a $(x_0, y_0)$ pontban, amiket az érintősík egyenletében is használhatunk.
+
+\begin{equation*}
+    f(x,y) \text{ totálisan deriválható } \Rightarrow f(x,y) \text{ parciálisan is deriválható}
+\end{equation*}
+
+Ez fordítva nem igaz, tehát ha a függvény parciálisan deriválható, akkor nem biztos hogy totálisan is deriválható.
+
+\newpage
+
+\section{Többváltozós függvények integrálása}
+
+\subsection{Kettős integrál}
+
+Mígy az egyváltozós integrál a függvény alatti területet számolta, addig a kettős integrál a függvény alatti test térfogatot számolja.
+
+\begin{equation*}
+    \int_{a}^{b} \int_{c}^{d} f(x,y) dy dx = \int_{c}^{d} \int_{a}^{b} f(x,y) dx dy
+\end{equation*}
+
+Az integrálás sorrendje tetszőleges, viszont figyelni kell hogy a határok is megfelelőek legyenek.
+
+\subsubsection{Kettős integrál számítása téglalap alakú tartományon}
+
+A kettős integrált elkezdjük a belső integrálással, majd a kül\-ső in\-teg\-rá\-lás\-sal számoljuk ki.
+Ilyenkor a külső integrálás változó konstansnak számít, és ugyanúgy integráljuk. Amint megvan a primitív függvény, behelyettesítjük ay első integrálás határait
+és integrálunk a külső változó szerint.
+
+Példa egy ilyen integrálra:
+
+\begin{equation*}
+    \int_{0}^{1} \int_{0}^{2} (x^2 + y) dy dx = \int_{0}^{1} \left[ x^2y + \frac{y^2}{2} \right]_{0}^{2} dx = \int_{0}^{1} (2x^2 + 2) dx = \left[ \frac{2x^3}{3} + 2x \right]_{0}^{1} = \frac{8}{3}
+\end{equation*}
+
+\subsubsection{Kettős integrál számítása normáltartományon}
+
+Ha a tartomány nem téglalap alakú, akkor a következőképpen számíthatjuk a kettős integrált:
+
+\begin{equation*}
+    \iint_{D} f(x,y) dx dy = \int_{a}^{b} \int_{g(x)}^{h(x)} f(x,y) dy dx
+\end{equation*}
+
+Ahol $g(x)$ és $h(x)$ a tartomány $x$ tengely menti határai és $D$ a tartomány. Ilyenkor a belső integrálásban a $y$-tól (amelyik nem tartalmaz változót) függő határokat kell behelyettesíteni.
+
+A tengely menti határokat úgy kapjuk meg, hogy a tartományt a $y = g(x)$ és $y = h(x)$ függvényekkel határoljuk.
 
 \end{document}
