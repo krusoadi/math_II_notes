@@ -5,6 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{esint}
+\usepackage{hyperref}
 
 \title{MATEK 2 Jegyzet}
 \author{Krusóczki Ádám}
@@ -19,6 +20,25 @@
 \newpage
 
 \maketitle
+
+
+\section{Előszó}
+
+Ez a jegyzet főképp a BME VIK villamosmérnöki szak Matematika II. tár\-gyá\-ra ké\-szült, de hasz\-nál\-hat\-ja bárki, 
+akinek jegyzetre van szüksége, lineáris algebából, végtelen sorokból vagy többváltozós függvényekből. Ebben a jegyzetben nincsen részletesen
+leírva a lineáris algebra sok része (egyenletrendszerek, Gauss-Jordan elimináció, determinánsok, mátrixok, mátrixműveletek), mert ezeket a témákat a Számítástudomány
+alapjai tárgyban tartották nekünk, amihez volt kidolgozott jegyzetünk. 
+
+\vspace{4mm}
+
+A hatványsorokig ellenörzött, a matematika gyakorlatvezetőnk által, de e\-lő\-for\-dul\-hat\-nak hibák a jegyzetben! A hibák jelzését nagyon megköszönöm,
+erre a jegyzet \href{https://github.com/krusoadi/tex_notes}{GitHub repository}-jában van lehetőség (Issues menüpont alatt). 
+
+\vspace{4mm}
+
+Jó tanulást (és sok szerencsét a vizsga/zh-hoz)!
+
+\newpage
 
 \section{Lineáris algebra}
 
@@ -729,7 +749,7 @@ Egy $f(x)$ függvény Taylor sorfejtése a következőképpen számítható:
 Ahol $f^{(n)}(x_0)$ az n-edik derivált értéke az $x_0$ pontban.
 A \textbf{Mclarin sorok} a Taylor sorok speciális esetei, ahol $x_0 = 0$.
 
-\subsubsection{Nevezetes Taylor sorok $x_0$ körül}
+\subsubsection{Nevezetes Taylor sorok \texorpdfstring{$x_0$}{x0} körül}
 
 \begin{eqnarray*}
     e^x &=& \sum_{n=0}^{\infty} \frac{1}{n!} (x-x_0)^n \\
