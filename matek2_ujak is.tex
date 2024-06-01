@@ -1234,4 +1234,133 @@ Ahol $g(x)$ és $h(x)$ a tartomány $x$ tengely menti határai és $D$ a tartom�
 
 A tengely menti határokat úgy kapjuk meg, hogy a tartományt a $y = g(x)$ és $y = h(x)$ függvényekkel határoljuk.
 
+\subsubsection{Kettős integrál határai}
+
+Sokszor érdemes az integrálás megkezdése előtt megnézni, hogy esetleg a a határok cseréjével egyszerűsíthető-e az integrál.
+
+Például:
+
+\begin{equation*}
+    \int_{0}^{1} \int_{1}^{2} \frac{2x\arcsin(xy)}{\sqrt{1+ {(xy)}^2}} dx dy =\int_{1}^{2} \int_{0}^{1} \frac{2x\arcsin(xy)}{\sqrt{1+ {(xy)}^2}} dy dx 
+\end{equation*}
+
+Itt jóval egyszerűbb először a $y$ szerint integrálni, hiába eredetileg $x$ szerint volt megadva.
+
+\subsubsection{Helyettesítéses integrálás}
+
+Helyettesítéses integrálásnál ha egy $x=x(u,v)$ és $y=y(u,v)$ 
+helyettesítést végzünk, akkor a Jacobi-féle determináns abszolút értékének segítségével tudjuk a kettős integrált átalakítani
+ (fontos, hogy a determináns nem lehet nulla).
+
+\begin{equation*}
+    \iint_{D} f(x,y) dx dy = \iint_{D_{uv}} f(x(u,v), y(u,v)) \left| \frac{\partial(x,y)}{\partial(u,v)} \right| du dv
+\end{equation*}
+
+Ahol a Jacobi-féle determináns a következőképpen számítható:
+
+\begin{equation*}
+    \left| \frac{\partial(x,y)}{\partial(u,v)} \right| = \left| \begin{bmatrix} \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\ \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \end{bmatrix} \right| = \left| \frac{\partial x}{\partial u} \frac{\partial y}{\partial v} - \frac{\partial x}{\partial v} \frac{\partial y}{\partial u} \right|
+\end{equation*}
+
+\subsubsection{Kettős integrál számítása polárkoordinátákban}
+
+Ha mondjuk egy kör alakú tartományban szeretnénk számolni a kettős integrált (de sok más esetben is), akkor érdemes polárkoordinátákat használni.
+
+\begin{equation*}
+    x = r \cos(\phi) \quad y = r \sin(\phi) \quad r \in [0, R] \quad \phi \in [0, 2\pi]
+\end{equation*}
+
+Ahol $r$ a sugarat, $\phi$ pedig a szöget, az R pedig a kör sugarát jelöli. Ekkor a kettős integrált a következőképpen számítható:
+
+\begin{equation*}
+    \iint_{D} f(x,y) dx dy = \int_{0}^{2\pi} \int_{0}^{R} r f(r \cos(\phi), r \sin(\phi)) dr d\phi
+\end{equation*}
+
+Itt azért szorozzuk $r$-rel a függvényt, mert a Jacobi-féle determináns abszolút értéke ilyenkor $r$.
+
+\newpage
+
+\subsection{Hármas integrál}
+
+A hármas integrál már inkabb fizikai alkalmazásokban fordul elő, ezzel például 
+térfogatot, nyomást, sűrűséget, vagy töltéseloszlást lehet számolni.
+
+\subsubsection{Hármas integrál számítása téglalap alakú tartományon}
+
+A hármas integrálás ugyanúgy működik mint a kettős, téglalap alapú tar\-to\-mány\-on, csak itt már 3 dimenzióban számolunk.
+
+\begin{equation*}
+    \iiint_{D} f(x,y,z) dx dy dz = \int_{a}^{b} \int_{c}^{d} \int_{e}^{g} f(x,y,z) dz dy dx
+\end{equation*}
+
+\subsubsection{Hármas integrál számítása normáltartományon}
+
+Ha a tartomány nem téglalap alakú, akkor a következőképpen számíthatjuk a hármas integrált:
+
+\begin{equation*}
+    \iiint_{D} f(x,y,z) dx dy dz = \int_{a}^{b} \int_{g(x)}^{h(x)} \int_{p(x,y)}^{q(x,y)} f(x,y,z) dz dy dx
+\end{equation*}
+
+Ahol $g(x)$ és $h(x)$ a tartomány $x$ tengely menti határai, $p(x,y)$ és $q(x,y)$ a tartomány $y$ tengely menti határai és $D$ a tartomány.
+
+\subsubsection{Helyettesítéses integrálás}
+
+Helyettesítéses integrálásnál ha egy $x=x(u,v,w)$, $y=y(u,v,w)$ és $z=z(u,v,w)$
+
+helyettesítést végzünk, akkor a Jacobi-féle determináns abszolút értékének segítségével tudjuk a hármas integrált átalakítani
+ (fontos, hogy a determináns nem lehet nulla).
+
+\begin{equation*}
+    \iiint_{D} f(x,y,z) dx dy dz =
+\end{equation*}
+
+
+\begin{equation*}
+    \iiint_{D_{uvw}} f(x(u,v,w), y(u,v,w), z(u,v,w)) \left| \frac{\partial(x,y,z)}{\partial(u,v,w)} \right| du dv dw
+\end{equation*}
+
+Ahol a Jacobi-féle determináns a következőképpen számítható:
+
+\begin{equation*}
+    \left| \frac{\partial(x,y,z)}{\partial(u,v,w)} \right| = \left| \begin{bmatrix} \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} & \frac{\partial x}{\partial w} \\ \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} & \frac{\partial y}{\partial w} \\ \frac{\partial z}{\partial u} & \frac{\partial z}{\partial v} & \frac{\partial z}{\partial w} \end{bmatrix} \right|
+\end{equation*}
+
+\newpage
+
+\subsubsection{Hármas integrál számítása hengerkoordinátákban}
+
+Ha henger alakú tartományban szeretnénk számolni a hármas integrált, akkor érdemes hengerkoordinátákat használni.
+
+\begin{equation*}
+    x = r \cos(\phi) \quad y = r \sin(\phi) \quad z = z \quad r \in [0, R] \quad \phi \in [0, 2\pi] \quad z \in [a, b]
+\end{equation*}
+
+Szerencsére a Jacobi-féle determináns itt is $r$, így a hármas integrált a következőképpen számítható:
+
+\begin{equation*}
+    \iiint_{D} f(x,y,z) dx dy dz = \int_{a}^{b} \int_{0}^{2\pi} \int_{0}^{R} r f(r \cos(\phi), r \sin(\phi), z) dr d\phi dz
+\end{equation*}
+
+\subsubsection{Hármas integrál számítása gömbkoordinátákban}
+
+Ha gömb alakú tartományban szeretnénk számolni a hármas integrált, akkor érdemes gömbkoordinátákat használni.
+
+\begin{equation*}
+    x = r \sin(\theta) \cos(\phi) \quad y = r \sin(\theta) \sin(\phi) \quad z = r \cos(\theta)
+\end{equation*}
+
+\begin{equation*}
+    r \in [0, R] \quad \phi \in [0, 2\pi] \quad \theta \in [0, \pi]
+\end{equation*}
+
+A Jacobi-féle determináns itt $r^2 \sin(\theta)$, így a hármas integrált a kö\-vet\-ke\-ző\-kép\-pen számítható:
+
+\begin{equation*}
+    \iiint_{D} f(x,y,z) dx dy dz =
+\end{equation*}
+
+\begin{equation*}
+    \int_{0}^{2\pi} \int_{0}^{\pi} \int_{0}^{R} r^2 \sin(\theta) f(r \sin(\theta) \cos(\phi), r \sin(\theta) \sin(\phi), r \cos(\theta)) dr d\theta d\phi
+\end{equation*}
+
 \end{document}
