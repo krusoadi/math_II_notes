@@ -1,5 +1,2 @@
-# LaTeX és TeX jegyzetek
-
-## Eddig elkészített/folyamatban lévő jegyzetek
-
-- Matematika 2.
+# LaTeX Note of Math II. (BME-VIK, Electrical Engineering)
+I've used GitHub Copilot for this project.
